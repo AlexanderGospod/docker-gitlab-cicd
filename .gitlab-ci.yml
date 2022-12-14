@@ -1,0 +1,83 @@
+image: markhobson/maven-chrome
+default:
+  tags:
+    - dockerRunner
+stages:
+  - API test
+  - Extended test
+
+API test:
+  stage: API test
+  script:
+    - mvn clean test "-Dcucumber.options=--tags @API"
+
+
+Extended test:
+  stage: Extended test
+  allow_failure: true
+  script:
+    - mvn compile test
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+    expire_in: 1 h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#image: maven:latest
+#default:
+#  tags:
+#    - runner
+##cache:
+##  paths:
+##    - allure-results/*
+#
+#stages:
+#  - API test
+##  - Smoke UI test
+##  - Extended UI test
+#
+#API test:
+#  stage: API test
+#  script:
+#    - mvn clean package "-Dcucumber.options=--tags @API"
+#    - mvn compile
+#  artifacts:
+##    when: always
+##    name: "report"
+#    paths:
+#      - allure-results/*
+#    expire_in: 1 h
+##Smoke UI test:
+##  stage: Smoke UI test
+##  script:
+##    - mvn clean test "-Dcucumber.options=--tags @UI --tags @Smoke"
+##
+##Extended UI test:
+##  stage: Extended UI test
+##  allow_failure: true
+##  script:
+##    - mvn clean test "-Dcucumber.options=--tags @UI --tags @Extended"
+##    - mvn compile
+#
+#
+#
+#
+#
+#
