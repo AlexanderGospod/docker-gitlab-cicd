@@ -1,4 +1,4 @@
-package com.cucumber.frame.api.user;
+package com.cucumber.frame.api.pojos;
 
 
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserData {
+public class User {
     private Integer id;
     private String email;
     private String first_name;

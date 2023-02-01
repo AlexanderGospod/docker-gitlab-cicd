@@ -1,4 +1,4 @@
-package com.cucumber.frame.api.user;
+package com.cucumber.frame.api.pojos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ColorsData {
+public class Color {
     private Integer id;
     private String name;
     private Integer year;

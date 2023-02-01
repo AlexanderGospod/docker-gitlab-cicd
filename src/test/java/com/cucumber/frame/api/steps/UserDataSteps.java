@@ -1,8 +1,8 @@
 package com.cucumber.frame.api.steps;
 
-import com.cucumber.frame.api.user.UserData;
-import com.cucumber.frame.api.user.UserUpdateTime;
-import com.cucumber.frame.api.user.UserUpdateTimeResponse;
+import com.cucumber.frame.api.pojos.User;
+import com.cucumber.frame.api.model.UserUpdate;
+import com.cucumber.frame.api.pojos.UserUpdateResponse;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -16,8 +16,8 @@ import static com.cucumber.frame.api.endpoint.ApiEndPoints.*;
 import static io.restassured.RestAssured.given;
 
 public class UserDataSteps {
-    private List<UserData> users;
-    UserUpdateTimeResponse userTimeResponse;
+    private List<User> users;
+    UserUpdateResponse userUpdateResponse;
     private String endpoint;
 
     @Given("the endpoint for sending requests about a list of users")
@@ -37,7 +37,7 @@ public class UserDataSteps {
                 .get(URL + endpoint)
                 .then().log().all()
                 .statusCode(200).contentType(ContentType.JSON)
-                .extract().body().jsonPath().getList("data", UserData.class);
+                .extract().body().jsonPath().getList("data", User.class);
     }
 
     @Then("the response must contain an avatar containing an ID for each user")
@@ -50,25 +50,34 @@ public class UserDataSteps {
         Assert.assertTrue(users.stream().allMatch(x -> x.getEmail().endsWith(requiredEndOfTheEmail)));
     }
 
+    @Then("the response must contain first name")
+    public void checkThatEachUserHasFirstName() {
+        Assert.assertFalse(users.stream().allMatch(x -> x.getFirst_name().isBlank()));
+    }
+
+    @Then("the response must contain last name")
+    public void checkThatEachUserHasLastName() {
+        Assert.assertFalse(users.stream().allMatch(x -> x.getLast_name().isBlank()));
+    }
 
     @When("update request has been sent")
     public void sentUpdateUserInformationRequest() {
-        UserUpdateTime userUpdateTime = new UserUpdateTime("morpheus", "zion resident");
-        userTimeResponse = given()
-                .body(userUpdateTime)
+        UserUpdate userUpdate = new UserUpdate("morpheus", "zion resident");
+        userUpdateResponse = given()
+                .body(userUpdate)
                 .when()
                 .contentType(ContentType.JSON)
                 .put(URL + endpoint)
                 .then().log().all()
                 .statusCode(200).contentType(ContentType.JSON)
-                .extract().as(UserUpdateTimeResponse.class);
+                .extract().as(UserUpdateResponse.class);
     }
 
     @Then("the response must contain user update time")
     public void checkThatResponseContainUserUpdateTime() {
         String currentTime = Clock.systemUTC().instant().toString();
         Assert.assertTrue("the current time - " + currentTime + " differs from the time of updating data on the server - "
-                        + userTimeResponse.getUpdatedAt().replaceAll("(.{7})$", "")
-                , currentTime.contains(userTimeResponse.getUpdatedAt().replaceAll("(.{7})$", "")) );
+                        + userUpdateResponse.getUpdatedAt().replaceAll("(.{7})$", "")
+                , currentTime.contains(userUpdateResponse.getUpdatedAt().replaceAll("(.{7})$", "")) );
     }
 }

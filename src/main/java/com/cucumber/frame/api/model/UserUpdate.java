@@ -1,4 +1,4 @@
-package com.cucumber.frame.api.user;
+package com.cucumber.frame.api.model;
 
 
 import lombok.AllArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserUpdateTime {
+public class UserUpdate {
     private String name;
     private String job;
 }

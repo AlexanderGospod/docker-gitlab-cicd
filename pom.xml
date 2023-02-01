@@ -12,6 +12,9 @@
     <selenium-version>4.4.0</selenium-version>
     <cucumber-version>4.8.0</cucumber-version>
     <assertj-version>3.23.1</assertj-version>
+    <allure-version>2.13.3</allure-version>
+    <rest-assured-version>5.0.1</rest-assured-version>
+    <lombok-version>1.18.24</lombok-version>
     <webdrivermanager-version>5.3.0</webdrivermanager-version>
     <aspectj.version>1.9.9.1</aspectj.version>
   </properties>
@@ -46,19 +49,19 @@
     <dependency>
       <groupId>io.qameta.allure</groupId>
       <artifactId>allure-cucumber4-jvm</artifactId>
-      <version>2.13.3</version>
+      <version>${allure-version}</version>
     </dependency>
 <!--    FOR api frame-->
     <dependency>
       <groupId>io.rest-assured</groupId>
       <artifactId>rest-assured</artifactId>
-      <version>5.0.1</version>
+      <version>${rest-assured-version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.24</version>
+      <version>${lombok-version}</version>
     </dependency>
   </dependencies>
   <build>

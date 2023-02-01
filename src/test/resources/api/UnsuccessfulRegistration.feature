@@ -6,4 +6,4 @@ Feature: UNSUCCESSFUL REGISTRATION:- As a new user I can't register with wrong c
 
     Given the endpoint for register user
     When post request with email "sydney@fife" and empty password has been sent
-    Then the response must contain error: Missing password
+    Then the response must contain error: "Missing password"
