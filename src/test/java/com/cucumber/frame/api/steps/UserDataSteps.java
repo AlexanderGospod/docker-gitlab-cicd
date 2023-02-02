@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 import io.restassured.http.ContentType;
 import org.junit.Assert;
 
-import java.time.Clock;
+import java.time.*;
 import java.util.List;
 
 import static com.cucumber.frame.api.endpoint.ApiEndPoints.*;
@@ -24,6 +24,7 @@ public class UserDataSteps {
     public void setupEndpointToGetListOfUsers() {
         endpoint = ENDPOINT_FOR_GET_LIST_OF_USERS;
     }
+
     @Given("the endpoint for update user information")
     public void theValidEndpointForUpdateUserInformation() {
         endpoint = ENDPOINT_FOR_UPDATE_USER_INFORMATION;
@@ -75,9 +76,9 @@ public class UserDataSteps {
 
     @Then("the response must contain user update time")
     public void checkThatResponseContainUserUpdateTime() {
-        String currentTime = Clock.systemUTC().instant().toString();
-        Assert.assertTrue("the current time - " + currentTime + " differs from the time of updating data on the server - "
-                        + userUpdateResponse.getUpdatedAt().replaceAll("(.{7})$", "")
-                , currentTime.contains(userUpdateResponse.getUpdatedAt().replaceAll("(.{7})$", "")) );
+        ZoneId desiredTimeZone = ZoneId.of("Etc/GMT+0");
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(desiredTimeZone);
+        LocalDateTime currentTime = zonedDateTime.toLocalDateTime();
+        Assert.assertTrue(Duration.between(currentTime, userUpdateResponse.getUpdatedAt()).getSeconds() <= 1);
     }
 }
