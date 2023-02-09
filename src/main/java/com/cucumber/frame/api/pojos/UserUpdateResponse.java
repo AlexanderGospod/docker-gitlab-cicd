@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Data
+
 public class UserUpdateResponse extends UserUpdate {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'hh:mm:ss.SSSZ")
